@@ -1,11 +1,16 @@
 Package: tpiscaleR
-Title: What the Package Does (One Line, Title Case)
+Title: Tuning topographic position index
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Miles", "Berberich", email = "milesberberich@gmail.com", role = c("aut", "cre"))
+Description: Computing the optimal TPI radius to further use it to model other variables  .
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+Imports: terra, rBayesianOptimization
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+URL: https://github.com/milesberberich/tpiscaleR
+BugReports: https://github.com/milesberberich/tpiscaleR/issues
