@@ -24,4 +24,18 @@ With this package its possible:
   it only uses a certain number of points to evaluate the correlation. This can safe a lot of time. The function is called tpi_sample.
 
 - to find the "best radius" with the highest correlation to the target raster using a bayesian optimaziation. The function is called tpi_opt.
+
+## Requirements
+
+- terra package (to handle the raster data)
+- rBayesianOptimization
+
+## Example 1 (testing one specific scale / tpi_sample)
+
+```{r}
+dem <- terra:rast("C:/users/hanspeter/data/fabdem_cropped.tif)
+snowdepth <- terra:rast("C:/users/hanspeter/data/snowdepth.tif)
+
+
+
   
