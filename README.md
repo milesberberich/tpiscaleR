@@ -33,8 +33,8 @@ With this package its possible:
 ## Example 1 (testing one specific scale / tpi_sample)
 
 ```{r}
-dem <- terra:rast("C:/users/hanspeter/data/fabdem_cropped.tif)
-snowdepth <- terra:rast("C:/users/hanspeter/data/snowdepth.tif)
+dem <- terra:rast("C:/users/danielduesentrieb/data/fabdem_cropped.tif)
+snowdepth <- terra:rast("C:/users/danielduesentrieb/data/snowdepth.tif)
 
 
 
