@@ -1,4 +1,3 @@
-# hier will ich den radius bayesian optimisen.. Dazu nutze ich das script tpi_scale bzw. die zwei funktinoen die darin definiert wurden.
 #' @title optimizes the radius of a TPI used to to predict another variable
 #' @description Uses Bayesian optimization and sampling of single pixels at certain using different radii
 #' @param min_range Numeric. The minimum tpi - radius for optimization. The function will only find the optimal radius above this value.
@@ -27,3 +26,4 @@ tpi_opt <- function(min_range, max_range, dem, raster, n_sample, n_bayesianitera
   return(result)
 }
 
+# hier will ich den radius bayesian optimisen.. Dazu nutze ich das script tpi_scale bzw. die zwei funktinoen die darin definiert wurden.
