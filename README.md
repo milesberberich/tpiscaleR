@@ -1,41 +1,51 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # tpiscaleR
 
-## Terminology 
+<!-- badges: start -->
 
-#### TPI:
-The topographic position index is a scale-dependent terrain index. Positiv values indicate a convex and therefore exposed position. 
-Negativ values indicate a concave position. Because of its scale dependency, its hard to determine the right radius for the TPI. 
-In most cases, the TPI will be used to model another environmental variable like soil moisture.
+<!-- badges: end -->
 
-#### Radius: 
-The scale at which the TPI is computed. A radius of 5 e.g. compares the center pixel with the pixels at an 5m radius. 
+The goal of tpiscaleR is to …
 
-#### Target Raster:
-A one-layered SpatRaster showing the target variable, e.g. soil moisture, NDVI, snow depth. 
+## Installation
 
-#### DSM:
-The digital elevation model thats used to calculate the TPI.
+You can install the development version of tpiscaleR like so:
 
-## Key features
+``` r
+# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+```
 
-With this package its possible:
+## Example
 
-- to evaluate the correlation of TPI at an specific radius to the target raster. Instead of computing the TPI for the whole DSM,
-  it only uses a certain number of points to evaluate the correlation. This can safe a lot of time. The function is called tpi_sample.
+This is a basic example which shows you how to solve a common problem:
 
-- to find the "best radius" with the highest correlation to the target raster using a bayesian optimaziation. The function is called tpi_opt.
+``` r
+library(tpiscaleR)
+## basic example code
+```
 
-## Requirements
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
 
-- terra package (to handle the raster data)
-- rBayesianOptimization
+``` r
+summary(cars)
+#>      speed           dist       
+#>  Min.   : 4.0   Min.   :  2.00  
+#>  1st Qu.:12.0   1st Qu.: 26.00  
+#>  Median :15.0   Median : 36.00  
+#>  Mean   :15.4   Mean   : 42.98  
+#>  3rd Qu.:19.0   3rd Qu.: 56.00  
+#>  Max.   :25.0   Max.   :120.00
+```
 
-## Example 1 (testing one specific scale / tpi_sample)
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this.
 
-```{r}
-dem <- terra:rast("C:/users/danielduesentrieb/data/fabdem_cropped.tif)
-snowdepth <- terra:rast("C:/users/danielduesentrieb/data/snowdepth.tif)
+You can also embed plots, for example:
 
+<img src="man/figures/README-pressure-1.png" alt="" width="100%" />
 
-
-  
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tpi_opt.R
 \name{tpi_opt}
 \alias{tpi_opt}
-\title{optimizes the radius of a TPI used to to predict another variable}
+\title{Optimizes the radius of a TPI used to predict another variable}
 \usage{
 tpi_opt(
   min_range,
@@ -16,22 +16,25 @@ tpi_opt(
 )
 }
 \arguments{
-\item{min_range}{Numeric. The minimum tpi - radius for optimization. The function will only find the optimal radius above this value.}
+\item{min_range}{Numeric. The minimum tpi-radius for optimization...}
 
-\item{max_range}{Numeric. The maximum tpi-radius for optimization.The function will only find the optimal radius smaller than this value.}
+\item{max_range}{Numeric. The maximum tpi-radius for optimization...}
 
-\item{dem}{terra::SpatRaster. The Digital Elevation Model that will be used to compute TPI}
+\item{dem}{terra::SpatRaster. The Digital Elevation Model...}
 
-\item{raster}{terra::SpatRaster. The target raster to correlate against, e.g. NDVI, soil moisture, snow depth, If the target variable is only available as a SpatVect, please rasterize.}
+\item{raster}{terra::SpatRaster. The target raster to correlate against...}
 
-\item{n_sample}{Numeric. Number of pixels for which the TPI get calculated at each step. Increasing n_sample increases computational effort and accuracy}
+\item{n_sample}{Numeric. Number of pixels for which the TPI get calculated...}
 
-\item{n_bayesianiterations}{Numeric. Number of iterations for the optimizer, increasing n_bayesianiterations increases computational effort and accuracy}
+\item{n_bayesianiterations}{Numeric. Number of iterations for the optimizer...}
 
-\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function. Higher kappa makes the optimizer more explorativ and less likely to miss out a maxima.}
+\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function...}
 
-\item{correlation_coefficient}{String. The type of correlation to use (e.g., "pearson", "spearman", "rsme_linear", "r2_linear", "rsme_quad", "r2_quad", "rmse_cubic", "r2_cubic").}
+\item{correlation_coefficient}{String. The type of correlation to use...}
+}
+\value{
+A list object of class \code{BayesianOptimization} containing the optimization results.
 }
 \description{
-Uses Bayesian optimization and sampling of single pixels at certain using different radii
+Uses Bayesian optimization and sampling of single pixels at certain using different radii.
 }

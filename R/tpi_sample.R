@@ -1,8 +1,8 @@
 #' @title optimizes the radius of a TPI used to to predict another variable
 #' @description Uses Bayesian optimization and sampling of single pixels at certain using different radii
-#' @param raster_dsm terra::SpatRaster. The Digital Elevation Model that will be used to compute TPI
-#' @param raster_target terra::SpatRaster. The target raster to correlate against, e.g. NDVI, soil moisture, snow depth, If the target variable is only available as a SpatVect, please rasterize.
-#' @param sample_num Numeric. Number of pixels for which the TPI get calculated. Increasing n_sample increases computational effort and accuracy
+#' @param raster_dsm terra::SpatRaster. The Digital Elevation Model that will be used to compute TPI. Both rasters (raster_dsm, raster_target) should have the same grid, resolution, crs and unit.
+#' @param raster_target terra::SpatRaster. The target raster to correlate against, e.g. NDVI, soil moisture, snow depth, If the target variable is only available as a SpatVect, please rasterize. Both rasters (raster_dsm, raster_target) should have the same grid, resolution, crs and unit.
+#' @param sample_num Numeric. Number of pixels for which the TPI get calculated. Increasing n_sample increases computational effort and accuracy.
 #' @param radius Numeric. The radius used to compute TPI
 #' @param relationship String. The type of correlation to use (e.g., "pearson", "spearman", "rsme_linear", "r2_linear", "rsme_quad", "r2_quad", "rmse_cubic", "r2_cubic").
 #' @export
