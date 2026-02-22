@@ -18,19 +18,19 @@ tpi_opt(
 \arguments{
 \item{min_range}{Numeric. The minimum tpi-radius for optimization...}
 
-\item{max_range}{Numeric. The maximum tpi-radius for optimization...}
+\item{max_range}{Numeric. The maximum tpi-radius for optimization. The optimal radius between these to values will be found.}
 
-\item{dem}{terra::SpatRaster. The Digital Elevation Model...}
+\item{dem}{terra::SpatRaster. The Digital Elevation Model used to calculate the TPI.}
 
-\item{raster}{terra::SpatRaster. The target raster to correlate against...}
+\item{raster}{terra::SpatRaster. The target raster to correlate against. Eg. erosion rates, soil moisture, snow depth, NDVI}
 
-\item{n_sample}{Numeric. Number of pixels for which the TPI get calculated...}
+\item{n_sample}{Numeric. Number of pixels for which the TPI get calculated in each try. Increasing this increases accuracy and computational time.}
 
-\item{n_bayesianiterations}{Numeric. Number of iterations for the optimizer...}
+\item{n_bayesianiterations}{Numeric. Number of iterations for the bayesian optimizer.}
 
-\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function...}
+\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function.}
 
-\item{correlation_coefficient}{String. The type of correlation to use...}
+\item{correlation_coefficient}{String. The type of correlation to use. Options are: pearson, spearman, rmse_linear, r2_linear, rmse_quad, r2_quad, rmse_cubic, r2_cubic}
 }
 \value{
 A list object of class \code{BayesianOptimization} containing the optimization results.
