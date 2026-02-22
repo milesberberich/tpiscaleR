@@ -9,7 +9,7 @@
 #' @param n_sample Numeric. Number of pixels for which the TPI get calculated at each step. Increasing this increases the computation time and accuracy
 #' @param n_bayesianiterations Numeric. Number of iterations for the bayesian optimizer. Increasing this increases the computation time and accuracy
 #' @param kappa_bayesian Numeric. The kappa parameter for the acquisition function.
-#' @param correlation_coefficient String. The type of correlation to use. (spearman, pearson. rmse_linear, r2_linear, rmse_quad, r2_quad, rmse_cubic, r2_cubic)
+#' @param correlation_coefficient String. The type of  correlation to use. (spearman, pearson. rmse_linear, r2_linear, rmse_quad, r2_quad, rmse_cubic, r2_cubic)
 #' @return A list object of class \code{BayesianOptimization} containing the optimization results.
 #' @export
 
