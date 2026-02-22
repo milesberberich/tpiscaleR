@@ -4,7 +4,7 @@
 #' @param raster_target terra::SpatRaster. The target raster to correlate against, e.g. NDVI, soil moisture, snow depth, If the target variable is only available as a SpatVect, please rasterize. Both rasters (raster_dsm, raster_target) should have the same grid, resolution, crs and unit.
 #' @param sample_num Numeric. Number of pixels for which the TPI get calculated. Increasing n_sample increases computational effort and accuracy.
 #' @param radius Numeric. The radius used to compute TPI
-#' @param relationship String. The type of correlation to use (e.g., "pearson", "spearman", "rsme_linear", "r2_linear", "rsme_quad", "r2_quad", "rmse_cubic", "r2_cubic").
+#' @param relationship String. The type of correlation to use (e.g., "pearson", "spearman", "rmse_linear", "r2_linear", "rmse_quad", "r2_quad", "rmse_cubic", "r2_cubic").
 #' @export
 
 
@@ -13,7 +13,7 @@
 
 # this function basically computes the tpi for a given radius for a random set of points.
 # afterwards, the relationship between the tpi at the points and the target raster
-# will be evaluated using spearman, pearson, or linear, quadratic or cubic regression (R-squared as well as RSME are possible)
+# will be evaluated using spearman, pearson, or linear, quadratic or cubic regression (R-squared as well as rmse are possible)
 # sample_num defines how many random points are used,
 #radius is the radius of a tpi, it always uses a circle for the tpi computation
 
@@ -61,13 +61,13 @@ tpi_sample <- function(raster_dsm, raster_target, sample_num, radius, relationsh
     return(pearson_list)}
 
   # regression linear block
-  if(relationship == "rsme_linear" | relationship == "r2_linear"){
+  if(relationship == "rmse_linear" | relationship == "r2_linear"){
     model <- lm(snow_depth ~ tpi, data = random_points_df)
-    if(relationship == "rsme_linear"){
-      rsme <- sqrt(mean(model$residuals^2))
-      print(paste("linear rsme  between tpi at scale ", radius, " = ", rsme))
-      rsme_list <- list(Score = as.numeric(-rsme), Preds = 0)
-      return(rsme_list)}
+    if(relationship == "rmse_linear"){
+      rmse <- sqrt(mean(model$residuals^2))
+      print(paste("linear rmse  between tpi at scale ", radius, " = ", rmse))
+      rmse_list <- list(Score = as.numeric(-rmse), Preds = 0)
+      return(rmse_list)}
     if(relationship == "r2_linear"){
       r2 <- summary(model)$r.squared
       print(paste("linear R squared between tpi at scale ", radius, " = ", r2))
@@ -75,23 +75,23 @@ tpi_sample <- function(raster_dsm, raster_target, sample_num, radius, relationsh
       return(r2_list)}}
 
   # regression quadratic block
-  if(relationship == "rsme_quad" | relationship == "r2_quad"){
+  if(relationship == "rmse_quad" | relationship == "r2_quad"){
     model <- lm(snow_depth ~ poly(tpi, 2, raw = TRUE), data = random_points_df)
-    if(relationship == "rsme_quad"){
-      rsme <- sqrt(mean(model$residuals^2))
-      print(paste("quadratic RMSE between tpi at scale ", radius, " = ", rsme))
-      return(list(Score = as.numeric(-rsme), Preds = 0))}
+    if(relationship == "rmse_quad"){
+      rmse <- sqrt(mean(model$residuals^2))
+      print(paste("quadratic RMSE between tpi at scale ", radius, " = ", rmse))
+      return(list(Score = as.numeric(-rmse), Preds = 0))}
     if(relationship == "r2_quad"){
       r2 <- summary(model)$r.squared
       print(paste("quadratic R squared between tpi at scale ", radius, " = ", r2))
       return(list(Score = as.numeric(r2), Preds = 0))}}
 
-  if(relationship == "rsme_cubic" | relationship == "r2_cubic"){
+  if(relationship == "rmse_cubic" | relationship == "r2_cubic"){
     model <- lm(snow_depth ~ poly(tpi, 3, raw = TRUE), data = random_points_df)
-    if(relationship == "rsme_cubic"){
-      rsme <- sqrt(mean(model$residuals^2))
-      print(paste("cubic RMSE between tpi at scale ", radius, " = ", rsme))
-      return(list(Score = as.numeric(-rsme), Preds = 0))}
+    if(relationship == "rmse_cubic"){
+      rmse <- sqrt(mean(model$residuals^2))
+      print(paste("cubic RMSE between tpi at scale ", radius, " = ", rmse))
+      return(list(Score = as.numeric(-rmse), Preds = 0))}
     if(relationship == "r2_cubic"){
       r2 <- summary(model)$r.squared
       print(paste("cubic R squared between tpi at scale ", radius, " = ", r2))
