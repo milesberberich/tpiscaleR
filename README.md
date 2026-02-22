@@ -1,51 +1,123 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # tpiscaleR
 
-<!-- badges: start -->
+## Terminology
 
-<!-- badges: end -->
+#### TPI:
 
-The goal of tpiscaleR is to …
+The topographic position index is a scale-dependent terrain index.
+Positiv values indicate a convex and therefore exposed position. Negativ
+values indicate a concave position. Because of its scale dependency, its
+hard to determine the right radius for the TPI. In most cases, the TPI
+will be used to model another environmental variable like soil moisture.
 
-## Installation
+#### Radius:
 
-You can install the development version of tpiscaleR like so:
+The scale at which the TPI is computed. A radius of 5 e.g. compares the
+center pixel with the pixels at an 5m radius.
+
+#### Target Raster:
+
+A one-layered SpatRaster showing the target variable, e.g. soil
+moisture, NDVI, snow depth.
+
+#### DSM:
+
+The digital elevation model thats used to calculate the TPI.
+
+## Key features
+
+With this package its possible:
+
+- to evaluate the correlation of TPI at an specific radius to the target
+  raster. Instead of computing the TPI for the whole DSM, it only uses a
+  certain number of points to evaluate the correlation. This can safe a
+  lot of time. The function is called tpi_sample.
+
+- to find the “best radius” with the highest correlation to the target
+  raster using a bayesian optimaziation. The function is called tpi_opt.
+
+## Requirements
+
+- terra package (to handle the raster data)
+- rBayesianOptimization
+
+## Example 1 (testing one specific scale / tpi_sample)
+
+Given we want to research the snowdepth and its relationship to the TPI
+and we want to check out the spearman correlation of a given TPI radius
+(15 meters). In this case we use 50 pixels to estimate the correlation.
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+dem <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/dsm_snowfree.tif")
+snowdepth <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/snowdepth.tif")
+
+spearman_15m <- tpiscaleR::tpi_sample(dem, snowdepth, 50, 15, relationship = "spearman")
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+    ## |---------|---------|---------|---------|=========================================                                          [1] "spearman correlation between tpi at scale  15  =  -0.338199279711885"
 
 ``` r
-library(tpiscaleR)
-## basic example code
+print(spearman_15m$Score)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+    ## [1] 0.3381993
+
+## Example 2 (Optimizing the tpi radius using bayesianOptimatziation)
+
+Given we want to research the snowdepth and its relationship to the TPI
+and we want to find out the optimalTPI radius. Because we expect a non
+linear relationship we pick the RSME of a linear regression as the to be
+optimized correlation coefficient. We try to find out the optimal radius
+between 5 and 25 meters using a sample of 55 pixels for each radius. We
+use 5 bayesian iterations and a kappa of 3. Because the bayesian
+optimization only look for the highest value, the rmse is always
+negative .
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+dem <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/dsm_snowfree.tif")
+snowdepth <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/snowdepth.tif")
+
+optimal_radius <- tpiscaleR::tpi_opt(5, 25, dem, snowdepth, 55, 5, 3, correlation_coefficient = "rmse_linear")
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+    ## [1] "The value in the following output is the absolute or negative value of the choosen relationship/method (such as pearson, spearman, rsme_linear, r2_quad...)"
+    ## elapsed = 26.59  Round = 1   radius = 12.22517   Value = -0.3856085 
+    ## elapsed = 42.19  Round = 2   radius = 19.28839   Value = -0.1840869 
+    ## elapsed = 25.00  Round = 3   radius = 11.25744   Value = -0.167922 
+    ## elapsed = 24.71  Round = 4   radius = 11.03893   Value = -0.2294847
 
-You can also embed plots, for example:
+    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
+    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
 
-<img src="man/figures/README-pressure-1.png" alt="" width="100%" />
+    ## elapsed = 32.97  Round = 5   radius = 15.28142   Value = -0.2102146
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
+    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
+
+    ## elapsed = 22.59  Round = 6   radius = 9.624668   Value = -0.343477
+
+    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
+    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
+
+    ## elapsed = 27.83  Round = 7   radius = 12.8436    Value = -0.2388942
+
+    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
+    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
+
+    ## elapsed = 39.82  Round = 8   radius = 18.31867   Value = -0.2697283
+
+    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
+    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
+
+    ## elapsed = 31.39  Round = 9   radius = 14.59616   Value = -0.2272139 
+    ## 
+    ##  Best Parameters Found: 
+    ## Round = 3    radius = 11.25744   Value = -0.167922
+
+``` r
+summary_df <- optimal_radius$History
+plot(summary_df$radius, summary_df$Value)
+```
+
+![](README_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->

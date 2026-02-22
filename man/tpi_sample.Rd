@@ -21,7 +21,7 @@ tpi_sample(
 
 \item{radius}{Numeric. The radius used to compute TPI}
 
-\item{relationship}{String. The type of correlation to use (e.g., "pearson", "spearman", "rsme_linear", "r2_linear", "rsme_quad", "r2_quad", "rmse_cubic", "r2_cubic").}
+\item{relationship}{String. The type of correlation to use (e.g., "pearson", "spearman", "rmse_linear", "r2_linear", "rmse_quad", "r2_quad", "rmse_cubic", "r2_cubic").}
 }
 \description{
 Uses Bayesian optimization and sampling of single pixels at certain using different radii

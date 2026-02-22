@@ -1,54 +1,68 @@
----
-output: github_document
----
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
-
 # tpiscaleR
 
-<!-- badges: start -->
-<!-- badges: end -->
+## Terminology 
 
-The goal of tpiscaleR is to ...
+#### TPI:
+The topographic position index is a scale-dependent terrain index. Positiv values indicate a convex and therefore exposed position. 
+Negativ values indicate a concave position. Because of its scale dependency, its hard to determine the right radius for the TPI. 
+In most cases, the TPI will be used to model another environmental variable like soil moisture.
 
-## Installation
+#### Radius: 
+The scale at which the TPI is computed. A radius of 5 e.g. compares the center pixel with the pixels at an 5m radius. 
 
-You can install the development version of tpiscaleR like so:
+#### Target Raster:
+A one-layered SpatRaster showing the target variable, e.g. soil moisture, NDVI, snow depth. 
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+#### DSM:
+The digital elevation model thats used to calculate the TPI.
+
+## Key features
+
+With this package its possible:
+
+- to evaluate the correlation of TPI at an specific radius to the target raster. Instead of computing the TPI for the whole DSM,
+it only uses a certain number of points to evaluate the correlation. This can safe a lot of time. The function is called tpi_sample.
+
+- to find the "best radius" with the highest correlation to the target raster using a bayesian optimaziation. The function is called tpi_opt.
+
+## Requirements
+
+- terra package (to handle the raster data)
+- rBayesianOptimization
+
+## Example 1 (testing one specific scale / tpi_sample)
+
+Given we want to research the snowdepth and its relationship to the TPI and we want to check out 
+the spearman correlation of a given TPI radius (15 meters). In this case we use
+50 pixels to estimate the correlation. 
+
+```{r}
+
+
+dem <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/dsm_snowfree.tif")
+snowdepth <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/snowdepth.tif")
+
+spearman_15m <- tpiscaleR::tpi_sample(dem, snowdepth, 50, 15, relationship = "spearman")
+
+print(spearman_15m$Score)
 ```
 
-## Example
+## Example 2 (Optimizing the tpi radius using bayesianOptimatziation)
 
-This is a basic example which shows you how to solve a common problem:
+Given we want to research the snowdepth and its relationship to the TPI and we want to find out 
+the optimalTPI radius. Because we expect a non linear relationship we pick the RSME of a linear regression
+as the to be optimized correlation coefficient. We try to find out the optimal radius between 5 and 25 meters using 
+a sample of 55 pixels for each radius. We use 5 bayesian iterations and a kappa of 3. Because the bayesian optimization only look for the highest value, the rmse is always negative .
+```{r}
 
-```{r example}
-library(tpiscaleR)
-## basic example code
+dem <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/dsm_snowfree.tif")
+snowdepth <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/snowdepth.tif")
+
+optimal_radius <- tpiscaleR::tpi_opt(5, 25, dem, snowdepth, 55, 5, 3, correlation_coefficient = "rmse_linear")
+
+summary_df <- optimal_radius$History
+plot(summary_df$radius, summary_df$Value)
+
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+ 

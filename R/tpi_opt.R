@@ -15,6 +15,9 @@
 
 tpi_opt <- function(min_range, max_range, dem, raster, n_sample, n_bayesianiterations, kappa_bayesian, correlation_coefficient = "spearman"){
 
+  if (terra::crs(terra::rast(dem)) != terra::crs(terra::rast(raster))){
+    print("CRS of dem and raster is not the same")
+  }
   limits <- list(radius = c(min_range, max_range))
 
   tpi_wrapper <- function(radius) {   ## just a wrapper so it can be easily used insiede the bayesian optimization

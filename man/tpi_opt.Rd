@@ -20,7 +20,7 @@ tpi_opt(
 
 \item{max_range}{Numeric. The maximum tpi-radius for optimization. The optimal radius between these to values will be found.}
 
-\item{dem}{terra::SpatRaster. The Digital Elevation Model used to calculate the TPI.}
+\item{dem}{terra::SpatRaster. The Digital Elevation Model used to calculate the TPI. Both of the used rasters should have the same crs, resolution and grid.}
 
 \item{raster}{terra::SpatRaster. The target raster to correlate against. Eg. erosion rates, soil moisture, snow depth, NDVI}
 
@@ -28,7 +28,7 @@ tpi_opt(
 
 \item{n_bayesianiterations}{Numeric. Number of iterations for the bayesian optimizer.}
 
-\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function.}
+\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function. A higher kappa lead to a more explorative bayesian optimization.}
 
 \item{correlation_coefficient}{String. The type of correlation to use. Options are: pearson, spearman, rmse_linear, r2_linear, rmse_quad, r2_quad, rmse_cubic, r2_cubic}
 }
