@@ -1,7 +1,7 @@
 
 <div align="center">
 
-<img src="man/figures/tpiscaler_logo" width="400px">
+<img src="man/figures/tpiscaler_logo.png" width="400px">
 
 </div>
 
@@ -61,13 +61,13 @@ snowdepth <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/sn
 spearman_15m <- tpiscaleR::tpi_sample(dem, snowdepth, 50, 15, relationship = "spearman")
 ```
 
-    ## |---------|---------|---------|---------|=========================================                                          [1] "spearman correlation between tpi at scale  15  =  -0.314861944777911"
+    ## |---------|---------|---------|---------|=========================================                                          [1] "spearman correlation between tpi at scale  15  =  -0.125858343337335"
 
 ``` r
 print(spearman_15m$Score)
 ```
 
-    ## [1] 0.3148619
+    ## [1] 0.1258583
 
 ## Example 2 (Optimizing the tpi radius using bayesianOptimatziation)
 
@@ -88,18 +88,18 @@ optimal_radius <- tpiscaleR::tpi_opt(5, 25, dem, snowdepth, 55, 5, 3, correlatio
 ```
 
     ## [1] "The value in the following output is the absolute or negative value of the choosen relationship/method (such as pearson, spearman, rsme_linear, r2_quad...)"
-    ## elapsed = 18.64  Round = 1   radius = 6.777566   Value = -0.2235978 
-    ## elapsed = 29.78  Round = 2   radius = 13.75336   Value = -0.2521369 
-    ## elapsed = 43.17  Round = 3   radius = 19.28442   Value = -0.4649449 
-    ## elapsed = 43.78  Round = 4   radius = 18.76696   Value = -0.2767868 
-    ## elapsed = 19.94  Round = 5   radius = 6.757527   Value = -0.3113361 
-    ## elapsed = 28.75  Round = 6   radius = 13.31329   Value = -0.2769264 
-    ## elapsed = 36.58  Round = 7   radius = 17.09084   Value = -0.2497529 
-    ## elapsed = 32.66  Round = 8   radius = 14.52898   Value = -0.2531363 
-    ## elapsed = 18.35  Round = 9   radius = 5.773586   Value = -0.2360387 
+    ## elapsed = 37.40  Round = 1   radius = 14.59838   Value = -0.6457195 
+    ## elapsed = 44.11  Round = 2   radius = 17.91347   Value = -0.5166894 
+    ## elapsed = 21.37  Round = 3   radius = 7.77273    Value = -0.4024807 
+    ## elapsed = 34.81  Round = 4   radius = 15.83383   Value = -0.2499954 
+    ## elapsed = 54.61  Round = 5   radius = 21.94572   Value = -0.2613865 
+    ## elapsed = 34.72  Round = 6   radius = 15.67755   Value = -0.4909993 
+    ## elapsed = 42.51  Round = 7   radius = 18.90614   Value = -0.2109633 
+    ## elapsed = 37.74  Round = 8   radius = 16.87917   Value = -0.2030989 
+    ## elapsed = 49.15  Round = 9   radius = 20.86216   Value = -0.2444369 
     ## 
     ##  Best Parameters Found: 
-    ## Round = 1    radius = 6.777566   Value = -0.2235978
+    ## Round = 8    radius = 16.87917   Value = -0.2030989
 
 ``` r
 summary_df <- optimal_radius$History

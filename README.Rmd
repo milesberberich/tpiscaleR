@@ -3,7 +3,7 @@ output: github_document
 ---
 
 <div align="center">
-  <img src="man/figures/tpiscaler_logo" width="400px">
+  <img src="man/figures/tpiscaler_logo.png" width="400px">
 </div>
 # tpiscaleR
 
