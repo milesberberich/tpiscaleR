@@ -16,21 +16,21 @@ tpi_opt(
 )
 }
 \arguments{
-\item{min_range}{Numeric. The minimum tpi-radius for optimization...}
+\item{min_range}{Numeric. The minimum tpi-radius.}
 
-\item{max_range}{Numeric. The maximum tpi-radius for optimization. The optimal radius between these to values will be found.}
+\item{max_range}{Numeric. The maximum tpi-radius. In between those to values, the optimal will be found.}
 
-\item{dem}{terra::SpatRaster. The Digital Elevation Model used to calculate the TPI. Both of the used rasters should have the same crs, resolution and grid.}
+\item{dem}{terra::SpatRaster. The Digital Elevation Model used to calculate the TPI.}
 
-\item{raster}{terra::SpatRaster. The target raster to correlate against. Eg. erosion rates, soil moisture, snow depth, NDVI}
+\item{raster}{terra::SpatRaster. The target raster to correlate against. E.g. soil moisture, NDVI, erosion rates, snowdepth...}
 
-\item{n_sample}{Numeric. Number of pixels for which the TPI get calculated in each try. Increasing this increases accuracy and computational time.}
+\item{n_sample}{Numeric. Number of pixels for which the TPI get calculated at each step. Increasing this increases the computation time and accuracy}
 
-\item{n_bayesianiterations}{Numeric. Number of iterations for the bayesian optimizer.}
+\item{n_bayesianiterations}{Numeric. Number of iterations for the bayesian optimizer. Increasing this increases the computation time and accuracy}
 
-\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function. A higher kappa lead to a more explorative bayesian optimization.}
+\item{kappa_bayesian}{Numeric. The kappa parameter for the acquisition function.}
 
-\item{correlation_coefficient}{String. The type of correlation to use. Options are: pearson, spearman, rmse_linear, r2_linear, rmse_quad, r2_quad, rmse_cubic, r2_cubic}
+\item{correlation_coefficient}{String. The type of  correlation to use. (spearman, pearson. rmse_linear, r2_linear, rmse_quad, r2_quad, rmse_cubic, r2_cubic)}
 }
 \value{
 A list object of class \code{BayesianOptimization} containing the optimization results.

@@ -1,3 +1,10 @@
+---
+output: github_document
+---
+
+<div align="center">
+  <img src="man/figures/tpiscaler_logo" width="400px">
+</div>
 # tpiscaleR
 
 ## Terminology 

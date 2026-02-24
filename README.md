@@ -1,4 +1,10 @@
 
+<div align="center">
+
+<img src="man/figures/tpiscaler_logo" width="400px">
+
+</div>
+
 # tpiscaleR
 
 ## Terminology
@@ -55,13 +61,13 @@ snowdepth <- terra::rast("C:/Users/miles/OneDrive/Dokumente/danieldüsentrieb/sn
 spearman_15m <- tpiscaleR::tpi_sample(dem, snowdepth, 50, 15, relationship = "spearman")
 ```
 
-    ## |---------|---------|---------|---------|=========================================                                          [1] "spearman correlation between tpi at scale  15  =  -0.338199279711885"
+    ## |---------|---------|---------|---------|=========================================                                          [1] "spearman correlation between tpi at scale  15  =  -0.314861944777911"
 
 ``` r
 print(spearman_15m$Score)
 ```
 
-    ## [1] 0.3381993
+    ## [1] 0.3148619
 
 ## Example 2 (Optimizing the tpi radius using bayesianOptimatziation)
 
@@ -82,38 +88,18 @@ optimal_radius <- tpiscaleR::tpi_opt(5, 25, dem, snowdepth, 55, 5, 3, correlatio
 ```
 
     ## [1] "The value in the following output is the absolute or negative value of the choosen relationship/method (such as pearson, spearman, rsme_linear, r2_quad...)"
-    ## elapsed = 26.59  Round = 1   radius = 12.22517   Value = -0.3856085 
-    ## elapsed = 42.19  Round = 2   radius = 19.28839   Value = -0.1840869 
-    ## elapsed = 25.00  Round = 3   radius = 11.25744   Value = -0.167922 
-    ## elapsed = 24.71  Round = 4   radius = 11.03893   Value = -0.2294847
-
-    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
-    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
-
-    ## elapsed = 32.97  Round = 5   radius = 15.28142   Value = -0.2102146
-
-    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
-    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
-
-    ## elapsed = 22.59  Round = 6   radius = 9.624668   Value = -0.343477
-
-    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
-    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
-
-    ## elapsed = 27.83  Round = 7   radius = 12.8436    Value = -0.2388942
-
-    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
-    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
-
-    ## elapsed = 39.82  Round = 8   radius = 18.31867   Value = -0.2697283
-
-    ## Warning in GPfit::GP_fit(X = Par_Mat[Rounds_Unique, ], Y =
-    ## Value_Vec[Rounds_Unique], : X should be in range (0, 1)
-
-    ## elapsed = 31.39  Round = 9   radius = 14.59616   Value = -0.2272139 
+    ## elapsed = 18.64  Round = 1   radius = 6.777566   Value = -0.2235978 
+    ## elapsed = 29.78  Round = 2   radius = 13.75336   Value = -0.2521369 
+    ## elapsed = 43.17  Round = 3   radius = 19.28442   Value = -0.4649449 
+    ## elapsed = 43.78  Round = 4   radius = 18.76696   Value = -0.2767868 
+    ## elapsed = 19.94  Round = 5   radius = 6.757527   Value = -0.3113361 
+    ## elapsed = 28.75  Round = 6   radius = 13.31329   Value = -0.2769264 
+    ## elapsed = 36.58  Round = 7   radius = 17.09084   Value = -0.2497529 
+    ## elapsed = 32.66  Round = 8   radius = 14.52898   Value = -0.2531363 
+    ## elapsed = 18.35  Round = 9   radius = 5.773586   Value = -0.2360387 
     ## 
     ##  Best Parameters Found: 
-    ## Round = 3    radius = 11.25744   Value = -0.167922
+    ## Round = 1    radius = 6.777566   Value = -0.2235978
 
 ``` r
 summary_df <- optimal_radius$History
